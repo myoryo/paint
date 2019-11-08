@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.Group?>
+<BorderPane prefHeight="500" prefWidth="750" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="field.PaintController">
+    <top>
+        <VBox>
+            <MenuBar nodeOrientation="LEFT_TO_RIGHT">
+
+                <Menu text="File">
+                    <MenuItem onAction="#onSave" text="Save" />
+                    <MenuItem onAction="#onSaveAs" text="Save As" />
+                    <MenuItem onAction="#onOpen" text="Open" />
+                    <MenuItem onAction="#onExit" text="Exit" />
+                </Menu>
+                <Menu text="Edit">
+                    <MenuItem onAction="#onUndo" text="Undo" />
+                    <MenuItem onAction="#onRedo" text="Redo" />
+                    <MenuItem onAction="#onClear" text="Clear" />
+                </Menu>
+            </MenuBar>
+
+        </VBox>
+
+    </top>
+    <left>
+        <ToolBar orientation="VERTICAL">
+            <fx:define>
+                <ToggleGroup fx:id="figures"/>
+            </fx:define>
+            <ToggleButton onAction="#onCircle" text="Circle" toggleGroup="$figures"/>
+            <ToggleButton onAction="#onSquare" text="Square" toggleGroup="$figures" />
+        </ToolBar>
+    </left>
+    <center>
+        <Canvas fx:id="canvas" height="400" width="400" />
+    </center>
+
+</BorderPane>
