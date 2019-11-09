@@ -3,20 +3,34 @@ package field;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ToggleGroup;
-
-import java.awt.*;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 
 public class PaintController {
     @FXML
     private Canvas canvas;
-
+    @FXML
+    private ColorPicker colorPicker;
+    @FXML
+    private TextField textBrushSize;
+    @FXML
+    private Slider brushSlider;
     public void initialize(){
         GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
         canvas.setOnMouseDragged(mouseEvent -> {
-            int size=5;
+            Double size;
+            try {
+                size = Double.parseDouble(textBrushSize.getText());
+            }catch(Exception ex){
+                size=0.0;
+            }
+            Color color = colorPicker.getValue();
             double x=mouseEvent.getX()-size/2;
             double y=mouseEvent.getY()-size/2;
+            graphicsContext.setFill(color);
             graphicsContext.fillOval(x,y,size,size);
         });
     }
@@ -46,5 +60,8 @@ public class PaintController {
     }
     public void onSquare(){
 
+    }
+    public void brushChange(){
+        textBrushSize.setText(String.valueOf(Math.round(brushSlider.getValue())));
     }
 }
