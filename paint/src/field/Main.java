@@ -13,9 +13,9 @@ public class Main extends Application {
         primaryStage.setTitle("Paint");
         primaryStage.show();
     }
-
-
     public static void main(String[] args) {
-        launch(args);
+        Application.launch(args);
     }
+
+
 }

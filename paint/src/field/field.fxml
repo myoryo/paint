@@ -9,16 +9,15 @@
     <top>
         <VBox>
             <MenuBar nodeOrientation="LEFT_TO_RIGHT">
-
                 <Menu text="File">
-                    <MenuItem onAction="#onSave" text="Save" />
+                    <MenuItem onAction="#onNew" text="New"/>
                     <MenuItem onAction="#onSaveAs" text="Save As" />
                     <MenuItem onAction="#onOpen" text="Open" />
                     <MenuItem onAction="#onExit" text="Exit" />
                 </Menu>
                 <Menu text="Edit">
-                    <MenuItem onAction="#onUndo" text="Undo" />
-                    <MenuItem onAction="#onRedo" text="Redo" />
+                    <MenuItem fx:id="undo" onAction="#onUndo" text="Undo" disable="true"/>
+                    <MenuItem fx:id="redo" onAction="#onRedo" text="Redo" disable="true"/>
                     <MenuItem onAction="#onClear" text="Clear" />
                 </Menu>
             </MenuBar>
@@ -29,20 +28,21 @@
     <left>
         <ToolBar orientation="VERTICAL">
             <fx:define>
-                <ToggleGroup fx:id="figures"/>
+                <ToggleGroup fx:id="tools"/>
             </fx:define>
-            <ToggleButton onAction="#onCircle" text="Circle" toggleGroup="$figures"/>
-            <ToggleButton onAction="#onSquare" text="Square" toggleGroup="$figures" />
-            <ToggleButton/>
-
-            <TextField fx:id="textBrushSize" text="10"/>
-            <Slider fx:id="brushSlider" min="0" max="150" value="15" onMouseDragged="#brushChange"/>
-
-            <ColorPicker fx:id="colorPicker" />
+            <ToggleButton fx:id="penBt" text="Pen" toggleGroup="$tools"/>
+            <ToggleButton fx:id="ellipseBt" text="Ellipse" toggleGroup="$tools"/>
+            <ToggleButton  fx:id="rectangleBt" text="Rectangle" toggleGroup="$tools" />
+            <ToggleButton fx:id="eraserBt" text="Eraser" toggleGroup="$tools"/>
+            <TextField fx:id="brushSize" text="10" onKeyTyped="#textBrushSizeChange"/>
+            <Slider fx:id="brushSlider" min="0" max="150" value="15" onMouseDragged="#sliderBrushSizeChange"/>
+            <ColorPicker fx:id="colorPicker"/>
         </ToolBar>
     </left>
     <center>
-        <Canvas fx:id="canvas" height="400" width="400" />
-    </center>
+        <ScrollPane BorderPane.alignment="CENTER"  style="-fx-background-color: #5f2661">
+            <Canvas BorderPane.alignment="CENTER" fx:id="canvas" height="750" width="1025"/>
+        </ScrollPane>
 
+    </center>
 </BorderPane>
