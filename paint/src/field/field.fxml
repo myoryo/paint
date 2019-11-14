@@ -10,7 +10,7 @@
         <VBox>
             <MenuBar nodeOrientation="LEFT_TO_RIGHT">
                 <Menu text="File">
-                    <MenuItem onAction="#onNew" text="New"/>
+                    <MenuItem fx:id="newMI" onAction="#onNew" text="New"/>
                     <MenuItem onAction="#onSaveAs" text="Save As" />
                     <MenuItem onAction="#onOpen" text="Open" />
                     <MenuItem onAction="#onExit" text="Exit" />

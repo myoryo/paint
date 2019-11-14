@@ -8,9 +8,12 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -20,12 +23,11 @@ public class NewCanvas {
      * Метод create(Canvas canvas)
      * Дает выбрать новый размер для Canvas
      */
-    public static void create(Canvas canvas){
+    public static Stage create(Canvas canvas, Stage stage){
         TextField widthField = new TextField("Width");
         TextField heightField = new TextField("Height");
         Button create = new Button("Create");
         create.setDisable(true);
-        Stage stage = new Stage();
         FlowPane root = new FlowPane();
         stage.setTitle("New"); // установка заголовка
         stage.setWidth(300);            // установка ширины
@@ -74,12 +76,16 @@ public class NewCanvas {
                 try {
                     canvas.setHeight(Double.parseDouble(heightField.getText()));
                     canvas.setWidth(Double.parseDouble(widthField.getText()));
+                    GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
+                    graphicsContext.setFill(Color.WHITE);
+                    graphicsContext.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
                     stage.close();
                 }catch(Exception  ex){
                     create.setDisable(true);
                 }
             }
         });
+        return stage;
     }
 }
 

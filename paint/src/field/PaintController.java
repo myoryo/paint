@@ -10,6 +10,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.awt.image.RenderedImage;
@@ -50,7 +51,8 @@ public class PaintController {
     private MenuItem redo;
     @FXML
     private MenuItem undo;
-
+    @FXML
+    private MenuItem newMI;
     private Ellipse ellipse;
     private Rectangle rectangle;
     private ArrayDeque<WritableImage>  undoStack= new ArrayDeque<WritableImage>();
@@ -157,8 +159,10 @@ public class PaintController {
      */
     public void onNew() {
         onSaveAs();
-        NewCanvas.create(canvas);
-        onClear();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage=NewCanvas.create(canvas, stage);
+        stage.show();
         undoStack.clear();
         redoStack.clear();
         undo.setDisable(true);
@@ -215,6 +219,7 @@ public class PaintController {
     private void onClear(){
         graphicsContext = canvas.getGraphicsContext2D();
         graphicsContext.setFill(Color.WHITE);
+        graphicsContext.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
         //graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
