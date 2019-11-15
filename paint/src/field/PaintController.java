@@ -1,14 +1,19 @@
 package field;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -52,7 +57,10 @@ public class PaintController {
     @FXML
     private MenuItem undo;
     @FXML
-    private MenuItem newMI;
+    private StackPane textPane;
+    @FXML
+    private ToggleButton textBt;
+    private TextField textField;
     private Ellipse ellipse;
     private Rectangle rectangle;
     private ArrayDeque<WritableImage>  undoStack= new ArrayDeque<WritableImage>();
@@ -109,6 +117,7 @@ public class PaintController {
          * Обработка зажатия
          */
         canvas.setOnMousePressed(mouseEvent -> {
+            textPane.getChildren().remove(textField);
             undoStackChange();
             redoStack.clear();
             redo.setDisable(true);
@@ -121,6 +130,22 @@ public class PaintController {
                 rectangle=new Rectangle();
                 rectangle.setX(mouseEvent.getX());
                 rectangle.setY(mouseEvent.getY());
+            }else if(textBt.isSelected()){
+                textField=new TextField();
+                textField.setPrefWidth(0);
+                textField.setMaxWidth(0);
+                textField.setPrefHeight(0);
+                textField.setMaxHeight(0);
+                textPane.getChildren().add(textField);
+                textPane.setAlignment(Pos.TOP_LEFT);
+                textField.setTranslateX(mouseEvent.getX());
+                textField.setTranslateY(mouseEvent.getY());
+                textField.setOnKeyReleased(keyEvent -> {
+                    if(KeyCode.getKeyCode("Enter")==keyEvent.getCode()){
+                        graphicsContext.strokeText(textField.getText(),textField.getTranslateX()+8,textField.getTranslateY()+16);
+                        textPane.getChildren().remove(textField);
+                    }
+                });
             }
         });
         /**
@@ -140,6 +165,7 @@ public class PaintController {
                 graphicsContext.strokeOval(ellipse.getCenterX(), ellipse.getCenterY(), ellipse.getRadiusX(), ellipse.getRadiusY());
             } else if(rectangleBt.isSelected()){
                 rectangle.setWidth(Math.abs(mouseEvent.getX()-rectangle.getX()));
+                rectangle.setWidth(Math.abs(mouseEvent.getX()-rectangle.getX()));
                 rectangle.setHeight(Math.abs(mouseEvent.getY()-rectangle.getY()));
                 if(rectangle.getX() > mouseEvent.getX()) {
                     rectangle.setX(mouseEvent.getX());
@@ -149,6 +175,14 @@ public class PaintController {
                 }
                 graphicsContext.setLineWidth(size);
                 graphicsContext.strokeRect(rectangle.getX(),rectangle.getY(),rectangle.getWidth(),rectangle.getHeight());
+            }else if(textBt.isSelected()){
+                textField.setPrefWidth(Math.abs(mouseEvent.getX()-textField.getTranslateX()));
+                textField.setMaxWidth(Math.abs(mouseEvent.getX()-textField.getTranslateX()));
+                textField.setPrefHeight(Math.abs(mouseEvent.getY()-textField.getTranslateY()));
+                textField.setMaxHeight(Math.abs(mouseEvent.getY()-textField.getTranslateY()));
+                textField.setPromptText("Your text should be here");
+                textField.setAlignment(Pos.TOP_LEFT);
+                textField.setFont(Font.font("Verdana", 12));
             }
         });
     }

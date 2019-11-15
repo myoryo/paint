@@ -31,6 +31,7 @@
                 <ToggleGroup fx:id="tools"/>
             </fx:define>
             <ToggleButton fx:id="penBt" text="Pen" toggleGroup="$tools"/>
+            <ToggleButton fx:id="textBt" text="Text" toggleGroup="$tools"/>
             <ToggleButton fx:id="ellipseBt" text="Ellipse" toggleGroup="$tools"/>
             <ToggleButton  fx:id="rectangleBt" text="Rectangle" toggleGroup="$tools" />
             <ToggleButton fx:id="eraserBt" text="Eraser" toggleGroup="$tools"/>
@@ -41,7 +42,9 @@
     </left>
     <center>
         <ScrollPane BorderPane.alignment="CENTER"  style="-fx-background-color: #5f2661">
+            <StackPane fx:id="textPane">
             <Canvas BorderPane.alignment="CENTER" fx:id="canvas" height="750" width="1025"/>
+            </StackPane>
         </ScrollPane>
 
     </center>
